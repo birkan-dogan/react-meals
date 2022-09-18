@@ -1,8 +1,24 @@
+import { useGlobalContext } from "../context/mealsContext";
+
 const Meals = () => {
+  const { meals } = useGlobalContext();
+  //   console.log(meals);
+
   return (
-    <div>
-      <h1>Meals</h1>
-    </div>
+    <section className="section-center">
+      {meals?.map((singleMeal) => {
+        const { idMeal, strMeal: title, strMealThumb: image } = singleMeal;
+        return (
+          <article key={idMeal} className="single-meal">
+            <img src={image} style={{ width: "200px" }} className="img" />
+            <footer>
+              <h5>{title}</h5>
+              <button className="like-btn">details</button>
+            </footer>
+          </article>
+        );
+      })}
+    </section>
   );
 };
 export default Meals;
