@@ -228,3 +228,25 @@ h5 {
 .search-container .btn {
   font-size: 0.75rem;
 }
+
+/* Modal */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.85);
+  display: grid;
+  place-items: center;
+  transition: var(--transition);
+  z-index: 100;
+}
+.modal-container {
+  width: 80vw;
+  max-width: 800px;
+  height: 80vh;
+  overflow: scroll;
+  background-color: var(--white);
+  border-radius: var(--borderRadius);
+}
