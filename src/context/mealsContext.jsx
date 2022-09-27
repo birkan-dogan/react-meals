@@ -37,7 +37,9 @@ const AppProvider = ({ children }) => {
     setSelectedMeal(meal);
     setShowModal(true);
   };
-
+  const closeModal = () => {
+    setShowModal(false);
+  };
   useEffect(() => {
     // this will work only the application loads
     fetchMeals(allMealsUrl);
@@ -56,6 +58,7 @@ const AppProvider = ({ children }) => {
         showModal,
         selectedMeal,
         selectMeal,
+        closeModal,
       }}
     >
       {children}
