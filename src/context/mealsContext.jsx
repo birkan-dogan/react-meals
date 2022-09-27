@@ -24,11 +24,22 @@ const AppProvider = ({ children }) => {
       setLoading(false);
     }
   };
+
+  const fetchRandomMeal = () => {
+    fetchMeals(randomMealUrl);
+  };
   useEffect(() => {
+    // this will work only the application loads
+    fetchMeals(allMealsUrl);
+  }, []);
+  useEffect(() => {
+    if (!searchTerm) return; // when the suprise button in Search component is clicked, searchTerm should be empty and data can't be fetched
     fetchMeals(`${allMealsUrl}${searchTerm}`);
   }, [searchTerm]);
   return (
-    <AppContext.Provider value={{ meals, loading, setSearchTerm }}>
+    <AppContext.Provider
+      value={{ meals, loading, setSearchTerm, fetchRandomMeal }}
+    >
       {children}
     </AppContext.Provider>
   );

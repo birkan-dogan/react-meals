@@ -2,7 +2,7 @@ import { useState } from "react";
 import { useGlobalContext } from "../context/mealsContext";
 const Search = () => {
   const [text, setText] = useState("");
-  const { setSearchTerm } = useGlobalContext(); // consuming the context
+  const { setSearchTerm, fetchRandomMeal } = useGlobalContext(); // consuming the context
   const handleChange = (e) => {
     setText(e.target.value);
   };
@@ -12,6 +12,11 @@ const Search = () => {
       setSearchTerm(text);
       setText("");
     }
+  };
+  const handleRandomMeal = () => {
+    setText("");
+    setSearchTerm("");
+    fetchRandomMeal();
   };
   return (
     <header className="search-container">
@@ -26,7 +31,11 @@ const Search = () => {
         <button type="submit" className="btn">
           search
         </button>
-        <button type="button" className="btn btn-hipster">
+        <button
+          type="button"
+          className="btn btn-hipster"
+          onClick={handleRandomMeal}
+        >
           suprise me
         </button>
       </form>
