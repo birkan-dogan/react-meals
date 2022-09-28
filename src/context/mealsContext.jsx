@@ -11,6 +11,7 @@ const AppProvider = ({ children }) => {
   const [searchTerm, setSearchTerm] = useState("");
   const [showModal, setShowModal] = useState(false);
   const [selectedMeal, setSelectedMeal] = useState(null);
+  const [favorites, setFavorites] = useState([]);
   const fetchMeals = async (url) => {
     try {
       const response = await axios(url);
@@ -31,15 +32,32 @@ const AppProvider = ({ children }) => {
     fetchMeals(randomMealUrl);
   };
 
-  const selectMeal = (idMeal) => {
+  const selectMeal = (idMeal, favoriteMeal) => {
     let meal;
-    meal = meals.find((meal) => meal.idMeal === idMeal);
+    if (favoriteMeal) {
+      meal = favorites.find((meal) => meal.idMeal === idMeal);
+    } else {
+      meal = meals.find((meal) => meal.idMeal === idMeal);
+    }
     setSelectedMeal(meal);
     setShowModal(true);
   };
   const closeModal = () => {
     setShowModal(false);
   };
+
+  const addToFavorites = (idMeal) => {
+    const alreadyFavorite = favorites.find((meal) => meal.idMeal === idMeal);
+    if (alreadyFavorite) return;
+    const meal = meals.find((meal) => meal.idMeal === idMeal);
+    const updatedFavorites = [...favorites, meal];
+    setFavorites(updatedFavorites);
+  };
+  const removeFromFavorites = (idMeal) => {
+    const updatedFavorites = favorites.filter((meal) => meal.idMeal !== idMeal);
+    setFavorites(updatedFavorites);
+  };
+
   useEffect(() => {
     // this will work only the application loads
     fetchMeals(allMealsUrl);
@@ -59,6 +77,9 @@ const AppProvider = ({ children }) => {
         selectedMeal,
         selectMeal,
         closeModal,
+        addToFavorites,
+        removeFromFavorites,
+        favorites,
       }}
     >
       {children}
